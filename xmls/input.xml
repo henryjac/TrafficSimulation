@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<traffic>
+    <road_length> 100 </road_length>
+    <n_cars> 90 </n_cars>
+    <max_speed> 2 </max_speed>
+    <lanes> 3 </lanes>
+    <idm>
+        <a> 0.73 </a>
+        <delta> 4 </delta>
+        <s0> 2 </s0>
+        <T> 1.5 </T>
+        <b> 1.67 </b>
+        <d> 5 </d>
+        <gamma_max> 10 </gamma_max>
+        <gamma_min> 1 </gamma_min>
+        <gamma_safe> 4 </gamma_safe>
+        <overtake_time> 3 </overtake_time>
+    </idm>
+    <ca>
+        <p> 0.3 </p>
+    </ca>
+</traffic>
