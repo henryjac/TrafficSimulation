@@ -1,5 +1,6 @@
 # TrafficSimulation
-![Fundamental diagram IDM](/img/fundmental_diagram_vs_lanes_IDM_dens.png)
+![Fundamental diagram IDM](/img/fundamental_diagram_vs_lanes_IDM_dens.png)
+
 Final Project in course Simulation and Modelling during Winter 2020/2021
 
 This repo contains the source code, results and report of a traffic simulation on a circular highway consisting of different amount of lanes.
