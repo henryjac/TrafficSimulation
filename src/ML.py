@@ -491,6 +491,8 @@ def run_animation_idm():
     def animate(frameNr, steps):
         for i in range(steps):
             theta, r = traffic_obj.integrate_system(integrator)
+        ax.clear()
+        ax.axis('off')
         return ax.scatter(theta, r, c=color),
 
     logger.debug("Initial:\n{}".format(traffic_obj))
@@ -575,6 +577,8 @@ def run_animation_ca():
     def animate(frameNr, steps):
         for i in range(steps):
             theta, r = traffic_obj.integrate_system(integrator)
+        ax.clear()
+        ax.axis('off')
         return ax.scatter(theta, r, c=color),
 
     anim = animation.FuncAnimation(fig, animate,

@@ -4,6 +4,7 @@
 from ML import *
 from time import time
 from itertools import cycle
+import sys
 #############################################
 
 ############ Calculate flowrate #############
@@ -451,75 +452,40 @@ def density_cars_lanes(road_length, n_points, n_lanes, idm=True, vmax=None, dens
 
 ################### Main #####################
 def main():
-    """ IDM Flowrate test plot """
-    # traffic_obj = run_simulation_idm()
-    # flowrates, times = plot_flowrate(traffic_obj)
+    if len(sys.argv) < 2:
+        exit("Specify analysis to be done.")
+    options = {
+        "idm_flowrate":{"fnc":plot_flowrate,"args":run_simulation_idm,"kwargs":{}},
+        "ca_flowrate":{"fnc":plot_flowrate,"args":run_simulation_ca,"kwargs":{}},
+        "idm_flowrates_lanes":{"fnc":flowrate_lanes_plot,"args":[],"kwargs":{"idm":True}},
+        "ca_flowrates_lanes":{"fnc":flowrate_lanes_plot,"args":[],"kwargs":{"idm":False}},
+        "ca_flowrates_lanes_mean":{"fnc":flowrate_lanes_plot,"args":[],"kwargs":{"idm":False,"mean":True}},
+        "idm_fundamental":{"fnc":fundamental_diagram,"args":[1000, 100, 1],"kwargs":{"idm":True,"plot":True}},
+        "ca_fundamental":{"fnc":fundamental_diagram,"args":[100,50,2],"kwargs":{"idm":False,"plot":True}},
+        "ca_fundamental_lanes":{"fnc":fund_diag_lanes,"args":[100, 50],"kwargs":{"idm":False,"vmax":2}},
+        "idm_fundamental_lanes":{"fnc":fund_diag_lanes,"args":[1000,100],"kwargs":{"idm":True,"vmax":30}},
+        "flowrate_diff":{"fnc":flowrate_model_plot,"args":[None],"kwargs":{}},
+        "ca_stderr":{"fnc":std_err_calc,"args":[100,15,2,2,100],"kwargs":{"idm":False,"p":0.5,"plot":True}},
+        "ca_stderr_lanes":{"fnc":std_err_lanes,"args":[50,10,2,51],"kwargs":{"idm":False,"p":0.3,"steps":1}},
+        "idm_stderr_lanes":{"fnc":std_err_lanes,"args":[500,10,30,100],"kwargs":{"idm":True,"steps":2}},
+        "ca_fundamental_diff_vmax":{"fnc":fund_diag_lanes_vmax,"args":[50,25],"kwargs":{"idm":False}},
+        "ca_fundamental_road_size":{"fnc":fund_diag_lanes,"args":[100,50],"kwargs":{"idm":False,"vmax":2,"density_full":True}},
+        "idm_fundamental_road_size":{"fnc":fund_diag_lanes,"args":[500,100],"kwargs":{"idm":True,"vmax":30,"density_full":True}},
+        "ca_n_cars_in_lane":{"fnc":n_cars_in_lanes,"args":[100,12,3,2],"kwargs":{"idm":False}},
+        "idm_n_cars_in_lane":{"fnc":n_cars_in_lanes,"args":[1000,10,3,30],"kwargs":{"idm":True}},
+        "ca_density_cars_lanes":{"fnc":density_cars_lanes,"args":[100,100,3],"kwargs":{"idm":False,"vmax":2,"density_full":True}},
+        "ca_density_cars_lanes":{"fnc":density_cars_lanes,"args":[500,100,3],"kwargs":{"idm":True,"vmax":30,"density_full":True}},
+    }
+    if sys.argv[1] not in options:
+        print("Not a valid option, implemented analysis options:")
+        for key in options.keys():
+            print("\t",key)
+        exit()
 
-    """ CA Flowrate test plot """
-    # traffic_obj = run_simulation_ca()
-    # flowrates, times = plot_flowrate(traffic_obj)
-
-    """ IDM Flowrates vs lanes """
-    # flowrate_lanes_plot(idm=True)
-
-    """ CA Flowrates vs lanes """
-    # flowrate_lanes_plot(idm=False)
-
-    """ CA Flowrates vs lanes 10000 time steps, mean"""
-    # flowrate_lanes_plot(idm=False, mean=True)
-
-    """ IDM fundamental diagram """
-    # fundamental_diagram(1000, 100, 1, idm=True, plot=True)
-
-    """ CA fundamental diagram """
-    # fundamental_diagram(100, 50, 2, idm=False, plot=True)
-
-    """ CA fundamental diagram lanes """
-    # fund_diag_lanes(100, 50, idm=False, vmax=2)
-
-    """ IDM fundamental diagram lanes """
-    # fund_diag_lanes(1000, 100, idm=True, vmax=30)
-
-    """ Flowrate difference IDM & CA """
-    flowrate_model_plot()
-
-    """ Standard error calculation CA """
-    # road_length = 100; n_cars = 15; v_max = 2; lanes = 2; n_simulations_max = 100
-    # std_err_calc(road_length, n_cars, v_max, lanes, n_simulations_max, idm=False, p=0.5, plot=True)
-
-    """ Standard error different lanes CA """
-    # road_length = 50; n_cars = 10; v_max = 2; n_simulations_max = 51
-    # std_err_lanes(road_length, n_cars, v_max, n_simulations_max, idm=False, p=0.3, steps=1)
-
-    """ Standard error different lanes IDM """
-    # road_length = 500; n_cars = 10; v_max = 30; n_simulations_max = 100
-    # std_err_lanes(road_length, n_cars, v_max, n_simulations_max, idm=True, steps=2)
-
-    """ Fundamental diagram vs different v_max CA """
-    # road_length = 50; n_points = 25
-    # fund_diag_lanes_vmax(road_length, n_points, idm=False)
-
-    """ Fundamental diagram for road size (n_lanes * road_length) for density CA """
-    # fund_diag_lanes(100, 50, idm=False, vmax=2, density_full=True)
-
-    """ Fundamental diagram for road size (n_lanes * road_length) for density IDM """
-    # fund_diag_lanes(500, 100, idm=True, vmax=30, density_full=True)
-
-    """ Plot how many cars are in each lane CA """
-    # road_length = 100; n_cars = 12; n_lanes = 3; v_max = 2;
-    # n_cars_in_lanes(road_length, n_cars, n_lanes, v_max, idm=False)
-
-    """ Plot how many cars are in each lane IDM """
-    # road_length = 1000; n_cars = 10; n_lanes = 3; v_max = 30
-    # n_cars_in_lanes(road_length, n_cars, n_lanes, v_max, idm=True)
-
-    """ Fundamental cars in lanes CA """
-    # road_length = 100; n_points = 100; n_lanes = 3; v_max = 2
-    # density_cars_lanes(road_length, n_points, n_lanes, idm=False, vmax=v_max, density_full=True)
-
-    """ Fundamental cars in lanes CA """
-    # road_length = 500; n_points = 100; n_lanes = 3; v_max = 30
-    # density_cars_lanes(road_length, n_points, n_lanes, idm=True, vmax=v_max, density_full=True)
+    if sys.argv[1] in ("ca_flowrate","idm_flowrate"):
+        options[sys.argv[1]]["fnc"](options[sys.argv[1]]["args"]())
+    else:
+        options[sys.argv[1]]["fnc"](*options[sys.argv[1]]["args"],**options[sys.argv[1]]["kwargs"])
 ##############################################
 
 if __name__ == '__main__':
