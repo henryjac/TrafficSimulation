@@ -13,7 +13,7 @@ try:
 except ImportError:
     print("Can't import xmltodict")
 import warnings
-warnings.filterwarnings("error")
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 #################################################
 
 ################### Set seed ####################
@@ -587,10 +587,7 @@ def run_animation_ca():
 
 #################### Main #######################
 def main():
-    # run_simulation_idm()
-    # run_animation_idm()
-    # run_simulation_ca()
-    run_animation_ca()
+    pass
 #################################################
 
 ################### Start #######################
